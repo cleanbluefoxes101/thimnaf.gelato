@@ -431,3 +431,71 @@ img::-moz-selection {
 .bg-primary {
     background-color: #2B2420;
 }
+
+
+
+.writer-dashboard{
+    width:90%;
+    max-width:1000px;
+    margin:80px auto;
+    padding:40px;
+    background:#1a1d24;
+    border-radius:12px;
+}
+
+.writer-dashboard h2{
+    color:#c49b58;
+    margin-bottom:10px;
+}
+
+.dashboard-subtitle{
+    color:#999;
+    margin-bottom:25px;
+}
+
+#articleTitle{
+    width:100%;
+    padding:15px;
+    margin-bottom:20px;
+    background:#12141b;
+    border:none;
+    color:white;
+    font-size:1.1rem;
+    border-radius:8px;
+}
+
+#articleEditor{
+    width:100%;
+    min-height:500px;
+    resize:vertical;
+    background:#12141b;
+    color:white;
+    border:none;
+    padding:20px;
+    line-height:1.8;
+    font-size:1rem;
+    border-radius:8px;
+}
+
+.dashboard-tools{
+    margin-top:20px;
+}
+
+.dashboard-tools button{
+    background:#98d83e;
+    border:none;
+    color:white;
+    padding:12px 22px;
+    margin-right:10px;
+    border-radius:30px;
+    cursor:pointer;
+}
+
+.dashboard-tools button:hover{
+    opacity:.85;
+}
+
+.stats{
+    margin-top:20px;
+    color:#c49b58;
+}
