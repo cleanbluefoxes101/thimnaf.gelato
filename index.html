@@ -1,210 +1,1164 @@
 <!DOCTYPE html>
-<!-- Template by Quackit.com -->
-<!-- Images by various sources under the Creative Commons CC0 license and/or the Creative Commons Zero license. 
-Although you can use them, for a more unique website, replace these images with your own. -->
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>// your_handle — thinker, builder, hacker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:         #080C14;
+      --surface:    #0F1623;
+      --surface2:   #161E2E;
+      --border:     #1E2D45;
+      --violet:     #7C3AED;
+      --violet-dim: #4C1D95;
+      --cyan:       #06B6D4;
+      --cyan-dim:   #0E7490;
+      --text:       #E2E8F0;
+      --text-muted: #64748B;
+      --text-dim:   #94A3B8;
+      --mono:       'JetBrains Mono', monospace;
+      --sans:       'Space Grotesk', sans-serif;
+      --body:       'Inter', sans-serif;
+    }
 
-    <title>cleanbluefoxes101</title>
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--violet); color: #fff; }
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    /* ─── SCROLLBAR ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--violet-dim); border-radius: 2px; }
 
-    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
-    <link href="css/custom.css" rel="stylesheet">
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: transparent;
+      transition: background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(8,12,20,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--cyan);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--text-muted); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+    .nav-links a {
+      color: var(--text-dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--cyan);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-links a:hover::after { width: 100%; }
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    /* ─── HERO ────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-    <!-- Custom Fonts from Google -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    
+    /* grid overlay — the "knows the web" tell */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    /* gradient vignette */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 20% 50%, transparent 30%, var(--bg) 100%);
+      pointer-events: none;
+    }
+
+    /* floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      opacity: 0.18;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--violet); top: -100px; right: -100px; }
+    .orb-2 { width: 320px; height: 320px; background: var(--cyan); bottom: 0px; right: 30%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hero-name {
+      font-family: var(--sans);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+    .hero-name .accent { color: var(--violet); }
+
+    /* terminal prompt — the signature element */
+    .terminal-line {
+      font-family: var(--mono);
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+    .terminal-line .prompt { color: var(--cyan); }
+    .terminal-line .cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--cyan);
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.25s;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--violet);
+      color: #fff;
+      border-color: var(--violet);
+    }
+    .btn-primary:hover {
+      background: #6D28D9;
+      box-shadow: 0 0 24px rgba(124,58,237,0.45);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 16px rgba(6,182,212,0.2);
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; left: 3rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.7s 1s forwards;
+    }
+    .scroll-hint .line {
+      width: 40px; height: 1px;
+      background: var(--text-muted);
+    }
+
+    /* ─── SECTION SHARED ──────────────────────────────────────── */
+    section { padding: 7rem 3rem; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+      margin: 0 3rem;
+      width: calc(100% - 6rem);
+    }
+
+    /* ─── ABOUT ───────────────────────────────────────────────── */
+    #about { background: var(--surface); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      max-width: 1100px;
+    }
+    .about-text p { color: var(--text-dim); margin-bottom: 1.25rem; line-height: 1.8; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+    .chip {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      transition: all 0.2s;
+    }
+    .chip:hover {
+      border-color: var(--violet);
+      color: var(--violet);
+      box-shadow: 0 0 12px rgba(124,58,237,0.2);
+    }
+    .chip.cyan { border-color: var(--cyan-dim); color: var(--cyan); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.3s;
+    }
+    .stat-card:hover { border-color: var(--violet); }
+    .stat-num {
+      font-family: var(--sans);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--violet);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── ARTICLES ────────────────────────────────────────────── */
+    #articles { background: var(--bg); }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+    }
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .article-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--violet), var(--cyan));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .article-card:hover {
+      border-color: transparent;
+      box-shadow: 0 0 0 1px var(--border), 0 8px 32px rgba(124,58,237,0.15);
+      transform: translateY(-3px);
+    }
+    .article-card:hover::before { transform: scaleX(1); }
+
+    .article-tag {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+    }
+    .tag-phil  { color: #A78BFA; background: rgba(167,139,250,0.1); }
+    .tag-cyber { color: var(--cyan); background: rgba(6,182,212,0.1); }
+    .tag-poli  { color: #F472B6; background: rgba(244,114,182,0.1); }
+
+    .article-title {
+      font-family: var(--sans);
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.01em;
+    }
+    .article-excerpt {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .article-meta {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── ARTICLE MODAL ───────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,12,20,0.92);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-width: 760px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 3rem;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-close {
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { color: var(--cyan); border-color: var(--cyan); }
+    .modal h2 {
+      font-family: var(--sans);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    .modal-body { font-size: 0.95rem; color: var(--text-dim); line-height: 1.85; }
+    .modal-body p { margin-bottom: 1.25rem; }
+    .modal-body strong { color: var(--text); font-weight: 500; }
+    .modal-body blockquote {
+      border-left: 3px solid var(--violet);
+      padding: 0.75rem 0 0.75rem 1.5rem;
+      margin: 1.75rem 0;
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      color: var(--text);
+      font-style: italic;
+    }
+
+    /* ─── PROJECTS ────────────────────────────────────────────── */
+    #projects { background: var(--surface); }
+    .projects-list { max-width: 900px; }
+    .project-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.25s;
+      group: true;
+    }
+    .project-item:first-of-type { border-top: 1px solid var(--border); }
+    .project-item:hover .project-name { color: var(--violet); }
+    .project-num {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+    .project-name {
+      font-family: var(--sans);
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      transition: color 0.2s;
+    }
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .project-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .project-tag {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.2rem 0.55rem;
+    }
+    .project-arrow {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      padding-top: 0.2rem;
+    }
+    .project-item:hover .project-arrow {
+      color: var(--violet);
+      transform: translateX(4px);
+    }
+    .project-status {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .status-active { background: rgba(6,182,212,0.12); color: var(--cyan); }
+    .status-research { background: rgba(167,139,250,0.12); color: #A78BFA; }
+    .status-complete { background: rgba(74,222,128,0.12); color: #4ADE80; }
+    .status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+    /* ─── CONTACT ─────────────────────────────────────────────── */
+    #contact { background: var(--bg); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1000px;
+      align-items: start;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      transition: all 0.25s;
+    }
+    .contact-link:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(6,182,212,0.12);
+      transform: translateX(4px);
+    }
+    .contact-link-icon { font-size: 1.1rem; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .form-input, .form-textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+    }
+    .form-textarea { min-height: 130px; }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      padding: 2.5rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    footer span { letter-spacing: 0.05em; }
+
+    /* ─── ANIMATIONS ──────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      section { padding: 5rem 1.5rem; }
+      .divider { margin: 0 1.5rem; width: calc(100% - 3rem); }
+      #hero { padding: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .project-item { grid-template-columns: auto 1fr; }
+      .project-arrow { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .modal { padding: 2rem 1.5rem; }
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ───────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- Navigation -->
-    <nav id="siteNav" class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Logo and responsive toggle -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">
-                	<span class="glyphicon glyphicon-fire"></span> 
-                	ThimnaF.Gelato
-                </a>
-            </div>
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                         <a href="articles.html">Articles</a>
-                    </li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cybersecurity <span class="caret"></span></a>
-						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="#">Engage</a></li>
-							<li><a href="#">Pontificate</a></li>
-							<li><a href="#">Synergize</a></li>
-						</ul>
-					</li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-                
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container -->
-    </nav>
+  <!-- ─── NAV ──────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <span>// </span>handle<span>.io</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#articles">writing</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
 
-	<!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="header-content-inner">
-                <h1>Intellectual Dark Web</h1>
-                <p>Deplomacy, Tech and Philosophy. Three foreign languages of the Elite.</p>
-                <a href="articles.html" class="btn btn-primary btn-lg">Engage Now</a>
-            </div>
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">ethical hacker · philosopher · writer</div>
+      <h1 class="hero-name">
+        ThimnaF.<br /><span class="accent">Gelato</span>
+      </h1>
+      <div class="terminal-line">
+        <span class="prompt">$</span>
+        <span id="typewriter"></span>
+        <span class="cursor"></span>
+      </div>
+      <div class="hero-cta">
+        <a href="#articles" class="btn btn-primary">read the blog</a>
+        <a href="#contact" class="btn btn-ghost">get in touch</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="line"></div>
+      <span>scroll to explore</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── ABOUT ─────────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-label">whoami</div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2 class="section-title">Thinker.<br />Builder.<br />Breaker.</h2>
+        <p>I operate at the intersection of <strong>technology, philosophy, and power</strong>. By day I probe systems for weaknesses — not to exploit them, but to understand the architecture of trust. By night I write about what it means to live in a world increasingly shaped by code.</p>
+        <p>My politics are a conversation, not a manifesto. My philosophy leans toward the empirical — I find more value in questions than in certainties. And the web? It's the most interesting social experiment in human history, and I refuse to be a passive participant.</p>
+        <p>This space is where those three worlds collide.</p>
+        <div class="skill-chips">
+          <span class="chip cyan">penetration testing</span>
+          <span class="chip">network security</span>
+          <span class="chip">OSINT</span>
+          <span class="chip">philosophy of mind</span>
+          <span class="chip">political theory</span>
+          <span class="chip">CTF challenges</span>
+          <span class="chip">cryptography</span>
+          <span class="chip">systems thinking</span>
         </div>
-    </header>
+      </div>
 
-	<!-- Intro Section -->
-    <section class="intro">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                	<span class="glyphicon glyphicon-apple" style="font-size: 60px"></span>
-                    <h2 class="section-heading">Jean-Jacques Rousseau</h2>
-                    <p class="text-light">If I were the ruler of one of the Nations of Africa, I declare that I would erect a gallows on the frontier of the country, and I would hang without mercy the first foreigner who dared enter it, and the first citizen who attempted to leave it.</p>
-                </div>
-            </div>
+      <div class="about-stats reveal reveal-delay-2">
+        <div class="stat-card">
+          <div class="stat-num">12+</div>
+          <div class="stat-label">years in security</div>
         </div>
-    </section>
-
-	<!-- Content 1 -->
-    <section class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <img class="img-responsive img-circle center-block" src="images/highly-detailed-view-fox-its-natural-environment.jpg" alt="">
-                </div>
-                <div class="col-sm-6">
-                	<h2 class="section-header">The FOX</h2>
-                	<p class="lead text-muted">I have seen many beasts undone by strength, yet the fox endures by wit alone.Where force invites resistance, cunning opens the gate.</p>
-                	  <p2 class="lead text-muted">Fortune favors the fox because he courts her with preparation rather than hope. When others curse their fate, he has already devised another path.</p2>
-                	<a href="#" class="btn btn-primary btn-lg">Classify It</a>
-                </div>                
-                
-            </div>
+        <div class="stat-card">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">articles published</div>
         </div>
-    </section>
-
-	<!-- Content 2 -->
-     <section class="content content-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                	<h2 class="section-header">Legality of Hacking</h2>
-                	<p class="lead text-light">Only if one does not own the system and does not have clear permission from the owner, attempting to access, modify, test, or interfere with it can be classified as illegal in the State of South Africa. Always obtain explicit authorization before conducting any security testing or accessing systems that belong to another person or organization. Respecting privacy, data, and system ownership is a fundamental principle of ethical and lawful cybersecurity practice.</p>
-                	<a href="#" class="btn btn-default btn-lg">Legality</a>
-                </div>    
-                <div class="col-sm-6">
-                    <img class="img-responsive img-circle center-block" src="images/pexels-rdne-7841477.jpg" alt="">
-                </div>            
-                
-            </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">questions remaining</div>
         </div>
-    </section>    
-
-    <!-- Promos -->
-	<div class="container-fluid">
-        <div class="row promo">
-        	<a href="#">
-				<div class="col-md-4 promo-item item-1">
-					<h3>
-						Ethical Hacking
-					</h3>
-				</div>
-            </a>
-            <a href="#">
-				<div class="col-md-4 promo-item item-2">
-					<h3>
-						The Intellectual
-					</h3>
-				</div>
-            </a>
-			
-			<a href="#">
-				<div class="col-md-4 promo-item item-3">
-					<h3>
-						whoami
-					</h3>
-				</div>
-            </a>
+        <div class="stat-card">
+          <div class="stat-num">0</div>
+          <div class="stat-label">unread exploits ignored</div>
         </div>
-    </div><!-- /.container-fluid -->
+      </div>
+    </div>
+  </section>
 
-	<!-- Content 3 -->
-     <section class="content content-3">
-        <div class="container">
-			<h2 class="section-header"><span class="glyphicon glyphicon-pushpin text-primary"></span><br> $Clean_Blue_Foxes101</h2>
-			<p class="lead text-muted">We are a pentesting group (with permision) we test the security of business branches by hacking into their servers or operating systems. Our stratergies involve social engineering tactics to pass through security and employees to access rooms and computers we should not have access to.</p>
-			<p2 class="lead text-muted">We try to get our hands on private data including anything that could be of interest to the advesery, things that should be kept secured by the Cybersecurity department of the organisation.</p2
-			         <a href="#" class="btn btn-primary btn-lg"> CBF101</a>
+  <div class="divider"></div>
+
+  <!-- ─── ARTICLES ──────────────────────────────────────────────── -->
+  <section id="articles">
+    <div class="section-label">writing</div>
+    <h2 class="section-title reveal">Recent Articles</h2>
+    <p class="section-sub reveal">Dispatches from the overlap of code, power, and meaning.</p>
+
+    <div class="articles-grid" id="articlesGrid">
+
+      <div class="article-card reveal" onclick="openModal('modal-1')">
+        <span class="article-tag tag-cyber">cyberspace</span>
+        <h3 class="article-title">The Anatomy of a Well-Crafted Lie: Social Engineering in the Digital Age</h3>
+        <p class="article-excerpt">Social engineering isn't a technical exploit — it's a philosophical one. It exploits the gap between how we believe systems work and how they actually do.</p>
+        <div class="article-meta">
+          <span>June 12, 2026</span>
+          <span>9 min read</span>
         </div>
-    </section>
-    
-	<!-- Footer -->
-    <footer class="page-footer">
-    
-    	<!-- Contact Us -->
-        <div class="contact">
-        	<div class="container">
-				<h2 class="section-heading">Contact Developer</h2>
-				<p><span class="glyphicon glyphicon-earphone"></span><br> +1(23) 456 7890</p>
-				<p><span class="glyphicon glyphicon-envelope"></span><br> cleanbluefoxes101@gmail.com</p>
-        	</div>
+      </div>
+
+      <div class="article-card reveal reveal-delay-1" onclick="openModal('modal-2')">
+        <span class="article-tag tag-phil">philosophy</span>
+        <h3 class="article-title">Determinism and Accountability: Can We Hold Algorithms Responsible?</h3>
+        <p class="article-excerpt">When a machine learning model discriminates, who is morally culpable? A look at agency, causality, and the philosophical limits of automated systems.</p>
+        <div class="article-meta">
+          <span>May 28, 2026</span>
+          <span>11 min read</span>
         </div>
-        	
-        <!-- Copyright etc -->
-        <div class="small-print">
-        	<div class="container">
-        		<p>Copyright &copy; Example.com 2015</p>
-        	</div>
+      </div>
+
+      <div class="article-card reveal reveal-delay-2" onclick="openModal('modal-3')">
+        <span class="article-tag tag-poli">politics</span>
+        <h3 class="article-title">Surveillance Capitalism and the Slow Erosion of Political Autonomy</h3>
+        <p class="article-excerpt">The most dangerous political actor of the 21st century doesn't hold office. It runs on commodity hardware in data centers you'll never visit.</p>
+        <div class="article-meta">
+          <span>May 11, 2026</span>
+          <span>14 min read</span>
         </div>
-        
-    </footer>
+      </div>
 
-    <!-- jQuery -->
-    <script src="js/jquery-1.11.3.min.js"></script>
+      <div class="article-card reveal" onclick="openModal('modal-4')">
+        <span class="article-tag tag-cyber">cyberspace</span>
+        <h3 class="article-title">Zero-Trust as Philosophy: Designing Systems That Expect Betrayal</h3>
+        <p class="article-excerpt">Zero-trust architecture didn't start as a security framework — it's a world-view. Assume breach. Verify everything. Trust nothing by default.</p>
+        <div class="article-meta">
+          <span>April 30, 2026</span>
+          <span>8 min read</span>
+        </div>
+      </div>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+      <div class="article-card reveal reveal-delay-1" onclick="openModal('modal-5')">
+        <span class="article-tag tag-phil">philosophy</span>
+        <h3 class="article-title">The Ship of Theseus, but Make It Open Source</h3>
+        <p class="article-excerpt">When every line of code has been forked, refactored, and merged across a decade of contributors — is it still the same project?</p>
+        <div class="article-meta">
+          <span>April 14, 2026</span>
+          <span>7 min read</span>
+        </div>
+      </div>
 
-    <!-- Plugin JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
-    
-    <!-- Custom Javascript -->
-    <script src="js/custom.js"></script>
+      <div class="article-card reveal reveal-delay-2" onclick="openModal('modal-6')">
+        <span class="article-tag tag-poli">politics</span>
+        <h3 class="article-title">Why Technologists Make Terrible Politicians (And Why We Need Them Anyway)</h3>
+        <p class="article-excerpt">The people who built the systems shaping modern democracy are often the least equipped to govern democratically. That tension is worth sitting with.</p>
+        <div class="article-meta">
+          <span>March 22, 2026</span>
+          <span>10 min read</span>
+        </div>
+      </div>
 
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── PROJECTS ───────────────────────────────────────────────── -->
+  <section id="projects">
+    <div class="section-label">current work</div>
+    <h2 class="section-title reveal">Projects</h2>
+    <p class="section-sub reveal">Active research, tools, and experiments. Some public, some in-progress.</p>
+
+    <div class="projects-list">
+
+      <div class="project-item reveal" onclick="window.open('#','_blank')">
+        <div class="project-num">01</div>
+        <div>
+          <div class="project-status status-active"><span class="status-dot"></span> active</div>
+          <div class="project-name">NetGhost</div>
+          <div class="project-desc">A lightweight network reconnaissance tool for mapping attack surfaces during authorized penetration tests. Written in Go, CLI-first, no telemetry.</div>
+          <div class="project-tags">
+            <span class="project-tag">Go</span>
+            <span class="project-tag">network security</span>
+            <span class="project-tag">open source</span>
+          </div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+      <div class="project-item reveal reveal-delay-1" onclick="window.open('#','_blank')">
+        <div class="project-num">02</div>
+        <div>
+          <div class="project-status status-research"><span class="status-dot"></span> research</div>
+          <div class="project-name">The Governance Gap</div>
+          <div class="project-desc">An ongoing essay series exploring the 18-month lag between AI deployment and regulatory response — and what that gap costs us in political terms.</div>
+          <div class="project-tags">
+            <span class="project-tag">writing</span>
+            <span class="project-tag">AI policy</span>
+            <span class="project-tag">political theory</span>
+          </div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+      <div class="project-item reveal reveal-delay-2" onclick="window.open('#','_blank')">
+        <div class="project-num">03</div>
+        <div>
+          <div class="project-status status-active"><span class="status-dot"></span> active</div>
+          <div class="project-name">PhishLens</div>
+          <div class="project-desc">A browser extension for real-time phishing indicator detection — built during a CTF, turned into a usable tool. Focuses on visual cue manipulation and typosquatting patterns.</div>
+          <div class="project-tags">
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">browser extension</span>
+            <span class="project-tag">social engineering</span>
+          </div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+      <div class="project-item reveal" onclick="window.open('#','_blank')">
+        <div class="project-num">04</div>
+        <div>
+          <div class="project-status status-complete"><span class="status-dot"></span> complete</div>
+          <div class="project-name">Ethics of the Exploit</div>
+          <div class="project-desc">A 6-part lecture series on the moral philosophy of offensive security — responsible disclosure, the dual-use dilemma, and where ethical hacking ends and advocacy begins.</div>
+          <div class="project-tags">
+            <span class="project-tag">philosophy</span>
+            <span class="project-tag">security ethics</span>
+            <span class="project-tag">lecture series</span>
+          </div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── CONTACT ────────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="section-label">contact</div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h2 class="section-title">Let's talk.</h2>
+        <p class="section-sub" style="margin-bottom:2rem;">Whether you're a recruiter, a fellow security researcher, or you just want to argue about Kant — my inbox is open.</p>
+
+        <div class="contact-links">
+          <a href="mailto:you@yourdomain.com" class="contact-link">
+            <span class="contact-link-icon">✉</span>
+            you@yourdomain.com
+          </a>
+          <a href="https://github.com/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">⌥</span>
+            github.com/yourhandle
+          </a>
+          <a href="https://linkedin.com/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">◈</span>
+            linkedin.com/in/yourhandle
+          </a>
+          <a href="#" class="contact-link">
+            <span class="contact-link-icon">◎</span>
+            PGP key available on request
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="section-label" style="margin-bottom:1.5rem;">send a message</div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="form-label" for="name">name</label>
+            <input class="form-input" id="name" type="text" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">email</label>
+            <input class="form-input" id="email" type="email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="msg">message</label>
+            <textarea class="form-textarea" id="msg" placeholder="What's on your mind?"></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:fit-content;margin-top:0.5rem;" onclick="handleSubmit()">
+            send_message()
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+  <footer>
+    <span>// your_handle — built with intention, not a template</span>
+    <span>© 2026 — all thoughts my own</span>
+  </footer>
+
+  <!-- ─── ARTICLE MODALS ─────────────────────────────────────────── -->
+  <div class="modal-overlay" id="modal-1">
+    <div class="modal">
+      <div class="modal-close" onclick="closeModal('modal-1')">[ esc ]</div>
+      <span class="article-tag tag-cyber" style="margin-bottom:1.25rem;display:inline-block;">cyberspace</span>
+      <h2>The Anatomy of a Well-Crafted Lie: Social Engineering in the Digital Age</h2>
+      <div class="modal-body">
+        <p>Every penetration tester knows this truth: the most hardened firewall in the world collapses the moment someone holds the door open for a stranger in a hard hat.</p>
+        <blockquote>"Technology is neither good nor bad; nor is it neutral." — Melvin Kranzberg. But the people using it? Always one or the other.</blockquote>
+        <p>Social engineering is perhaps the most philosophically rich attack vector in the security practitioner's toolkit. It doesn't exploit a buffer overflow or a misconfigured SSH daemon — it exploits <strong>the gap between a system's intended behavior and a human's model of that behavior.</strong></p>
+        <p>When I walk into a building I'm not supposed to be in, carrying a clipboard and wearing a lanyard, I'm not lying exactly — I'm creating a coherent narrative that fits the mental shortcuts my target's brain is already primed to use. Cialdini called them the six principles of influence. Security professionals should call them attack surfaces.</p>
+        <p>The ethical dimension here is fascinating. I do this with permission. The same techniques, applied without consent, are manipulation at best and fraud at worst. The act is identical. The consent is everything. That distinction says something profound about where morality lives — not in actions, but in context and agreement.</p>
+        <p>The digital age has simply expanded the canvas. Phishing is a vishing call with infinite reach. Deepfakes are the ultimate pretext. And generative AI is training the next generation of social engineers at scale — without the ethics briefing.</p>
+        <p>Understanding how lies are constructed isn't dangerous — it's necessary. You cannot defend against something you refuse to fully comprehend.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-2">
+    <div class="modal">
+      <div class="modal-close" onclick="closeModal('modal-2')">[ esc ]</div>
+      <span class="article-tag tag-phil" style="margin-bottom:1.25rem;display:inline-block;">philosophy</span>
+      <h2>Determinism and Accountability: Can We Hold Algorithms Responsible?</h2>
+      <div class="modal-body">
+        <p>A recidivism prediction model denies someone parole. A content moderation system silences a journalist. A hiring algorithm filters out qualified candidates by zip code. In each case, the same question emerges: <strong>who is responsible?</strong></p>
+        <blockquote>"The question is not whether machines can think — it is whether men do." — B.F. Skinner</blockquote>
+        <p>Classical moral philosophy has always grounded accountability in agency. Kant's categorical imperative assumes rational agents making deliberate choices. Utilitarian calculus requires someone to do the calculating. Even virtue ethics presupposes a character capable of being virtuous or corrupt.</p>
+        <p>Algorithms have none of these qualities in any philosophically meaningful sense. A gradient descent loop doesn't intend to discriminate — it optimizes a loss function across training data that humans chose, labeled, and fed it. The model is deterministic in the strictest sense: given the same inputs, it will always produce the same outputs.</p>
+        <p>And yet we feel, correctly I think, that something morally significant is happening when these systems cause harm at scale. The philosophical move I want to make is this: <strong>accountability doesn't require algorithmic agency — it requires human authorship.</strong> Someone wrote the objective function. Someone signed off on the training set. Someone decided to deploy into a high-stakes context without adequate auditing.</p>
+        <p>The algorithm doesn't get to be responsible. But the humans in that chain absolutely do. The risk of anthropomorphizing AI systems is that we let those humans off the hook by treating the machine as an actor rather than an instrument.</p>
+        <p>When we say "the AI decided," we are performing an act of moral laundering. And we should stop.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-3">
+    <div class="modal">
+      <div class="modal-close" onclick="closeModal('modal-3')">[ esc ]</div>
+      <span class="article-tag tag-poli" style="margin-bottom:1.25rem;display:inline-block;">politics</span>
+      <h2>Surveillance Capitalism and the Slow Erosion of Political Autonomy</h2>
+      <div class="modal-body">
+        <p>Shoshana Zuboff coined the term. I want to talk about the part she doesn't quite reach: what surveillance capitalism does not just to consumers, but to <strong>citizens</strong>.</p>
+        <blockquote>"The goal of surveillance capitalism is the prediction and modification of human behavior as a means to produce revenue and market control." — Shoshana Zuboff</blockquote>
+        <p>Political autonomy — the capacity to form genuine preferences, deliberate freely, and vote according to your actual interests — depends on something surveillance capitalism systematically undermines: epistemic sovereignty. The ability to decide what you believe based on your own encounter with evidence.</p>
+        <p>Behavioral prediction markets don't care about your political opinions. They care about your <em>behavioral surplus</em> — the excess data your online activity produces beyond what's needed to serve you. But political campaigns figured out early that this surplus is extraordinarily useful for targeting, micro-messaging, and perhaps more critically, for <strong>suppressing turnout</strong> in persuadable demographics.</p>
+        <p>This is the political science of surveillance capitalism that we under-discuss: it's not just that you're shown ads. It's that the same infrastructure that sells you sneakers can be rented to convince you that voting doesn't matter. At scale. In the exact counties that determine electoral outcomes.</p>
+        <p>The most dangerous political actor of this century doesn't hold office. It processes billions of behavioral signals per day and charges by the impression. And it operates in a regulatory environment designed for a world that no longer exists.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-4">
+    <div class="modal">
+      <div class="modal-close" onclick="closeModal('modal-4')">[ esc ]</div>
+      <span class="article-tag tag-cyber" style="margin-bottom:1.25rem;display:inline-block;">cyberspace</span>
+      <h2>Zero-Trust as Philosophy: Designing Systems That Expect Betrayal</h2>
+      <div class="modal-body">
+        <p>The old security model was a castle: hard on the outside, soft in the middle. Once you were inside the perimeter, you were trusted. That model collapsed — not because attackers got smarter, but because the perimeter stopped being a meaningful concept.</p>
+        <blockquote>"Never trust. Always verify. Assume breach." — the zero-trust mandate</blockquote>
+        <p>I want to suggest that zero-trust is not just a security framework. It's a philosophy of epistemology applied to infrastructure. And like all good philosophies, it generalizes in interesting directions.</p>
+        <p>The core insight is Cartesian in spirit: <strong>distrust as a starting position is epistemically virtuous, not paranoid.</strong> Descartes doubted everything he could possibly doubt and found a bedrock — the thinking self. Zero-trust doubts every connection, every credential, every packet — and finds bedrock in continuous verification and least-privilege access.</p>
+        <p>The political parallel is uncomfortable but worth naming: healthy democracies are also zero-trust systems. They don't assume leaders are virtuous — they build verification mechanisms, separation of powers, and checks specifically because they assume breach is possible. The moment a society grants implicit trust to any actor — a party, a leader, an institution — it has reverted to perimeter security. And perimeters get breached.</p>
+        <p>Designing for betrayal is not cynicism. It is structural honesty about human fallibility. The systems that survive longest are the ones that assumed, from the start, that someone inside would eventually fail you.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-5">
+    <div class="modal">
+      <div class="modal-close" onclick="closeModal('modal-5')">[ esc ]</div>
+      <span class="article-tag tag-phil" style="margin-bottom:1.25rem;display:inline-block;">philosophy</span>
+      <h2>The Ship of Theseus, but Make It Open Source</h2>
+      <div class="modal-body">
+        <p>The Linux kernel has approximately 28 million lines of code. Linus Torvalds wrote the original version in 1991. Today, his contributions represent a small fraction of the codebase. Is it still Linus's project?</p>
+        <blockquote>"Given enough eyeballs, all bugs are shallow." — Linus's Law. But whose eyes? Whose bugs?</blockquote>
+        <p>The Ship of Theseus paradox asks whether an object that has had all of its components replaced is still fundamentally the same object. Plutarch posed it about a ship. I want to pose it about open-source software — because the stakes are real and the answer has actual consequences.</p>
+        <p>Consider the identity criteria we might use. If identity is defined by <strong>continuity of origin</strong>, then every fork produces a new project. React is not the same as Preact, even if they're functionally similar. If identity is defined by <strong>continuity of function</strong>, then a fully-replaced kernel that does the same thing is the same kernel. If identity is defined by <strong>community and governance</strong>, then the project is its maintainers — and it dies and is reborn with every significant contributor change.</p>
+        <p>None of these criteria fully satisfy. And I think that's the point. Open-source software resists the kind of individual ownership that Western metaphysics tends to assume. It is genuinely, philosophically collective — and our concepts of authorship, identity, and intellectual property weren't built for it.</p>
+        <p>The GPL was a legal hack to protect software freedom. We still need the philosophical hack to understand what that software even is.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-6">
+    <div class="modal">
+      <div class="modal-close" onclick="closeModal('modal-6')">[ esc ]</div>
+      <span class="article-tag tag-poli" style="margin-bottom:1.25rem;display:inline-block;">politics</span>
+      <h2>Why Technologists Make Terrible Politicians (And Why We Need Them Anyway)</h2>
+      <div class="modal-body">
+        <p>Silicon Valley has a recurring fantasy: replace the messy, irrational process of democratic governance with clean systems thinking, product management, and data-driven decision-making. Every few years, a billionaire flirts with a candidacy, or a startup promises to "disrupt democracy," and the tech press swoons a little.</p>
+        <blockquote>"Politics is the art of the possible, the attainable — the art of the next best." — Otto von Bismarck. Engineers prefer optimal solutions.</blockquote>
+        <p>The problem is structural. Technologists are trained to solve well-defined problems with measurable outcomes. Political governance is the management of <strong>permanently contested values</strong> — questions where the disagreement is the point, not an inefficiency to be optimized away.</p>
+        <p>When a product manager asks "what does the user want?", they're trying to discover a latent preference they can serve. When a politician asks the same question, they're navigating competing and often irreconcilable demands from constituencies with fundamentally different interests. There is no product that satisfies all users equally. That's not a bug in democracy — it's the feature.</p>
+        <p>And yet. The people who understand how surveillance infrastructure works, how algorithmic systems shape behavior, how critical systems can be compromised — these people are almost entirely absent from the legislative bodies writing laws about those systems. The hearings are painful evidence of this gap.</p>
+        <p>We don't need technologists to replace politicians. We need them to be in the room when the laws are written — as advisors, as staffers, as witnesses, as constituents who actually show up. The goal is not to make politics more like engineering. It's to ensure that engineering is no longer done in a political vacuum.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SCRIPTS ─────────────────────────────────────────────────── -->
+  <script>
+    // ── Typewriter ──────────────────────────────────────────────
+    const phrases = [
+      'cat /etc/identity → ethical_hacker',
+      'grep -r "truth" ./philosophy/',
+      'nmap -sV the_political_landscape',
+      'ping -c 1 reality → response: complex',
+      'sudo think --critically --always',
+      'traceroute from code to consequence',
+    ];
+    let phraseIndex = 0, charIndex = 0, deleting = false;
+    const tw = document.getElementById('typewriter');
+
+    function type() {
+      const current = phrases[phraseIndex];
+      if (!deleting) {
+        tw.textContent = current.slice(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+      } else {
+        tw.textContent = current.slice(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      }
+      setTimeout(type, deleting ? 28 : 55);
+    }
+    setTimeout(type, 1400);
+
+    // ── Nav scroll ───────────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── Scroll reveal ────────────────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    // ── Modal ────────────────────────────────────────────────────
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    // Close on backdrop click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) closeModal(overlay.id);
+      });
+    });
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+      }
+    });
+
+    // ── Contact form ─────────────────────────────────────────────
+    function handleSubmit() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const msg = document.getElementById('msg').value;
+      if (!name || !email || !msg) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      // Replace with actual form handler (e.g. Formspree, EmailJS)
+      alert(`Message received. I'll get back to you at ${email}.`);
+    }
+  </script>
 </body>
-
 </html>
