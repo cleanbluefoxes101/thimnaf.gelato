@@ -9,7 +9,7 @@
 
 (function () {
   // ── Config ────────────────────────────────────────────────────────
-  const WORKER_URL = "https://YOUR_WORKER.YOUR_SUBDOMAIN.workers.dev"; // ← change this
+  const WORKER_URL = "https://gelatobackend01.cleanbluefoxes101.workers.dev"; 
 
   // ── Helpers ───────────────────────────────────────────────────────
   function getOrCreateSession() {
